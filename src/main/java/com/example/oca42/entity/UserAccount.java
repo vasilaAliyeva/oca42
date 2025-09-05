@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,6 +32,16 @@ public class UserAccount {
     //toOne relationlarda default olaraq eagerdi
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY) //relation contact tablede saxlanir
     private Contact contact;
+
+    //MANY TO MANY USERDE YAZIRIQ relationu
+    //role tablelerde esasen eager qoyulur many to many olmasina baxmayaraq
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name ="role_id", referencedColumnName = "id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     //OneToOne -> id ler her iki terefde saxlanila biler
     //OneToMany -> id many terefde saxlanilir
