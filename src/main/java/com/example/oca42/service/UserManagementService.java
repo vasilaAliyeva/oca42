@@ -15,14 +15,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserManagementService implements UserService {
+public class UserManagementService  {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    //ModelMapper/ MapStruct/Remondis-remap/
 
-    @Override
     public List<UserResponseDto> getAllUsers() {
         List<UserAccount> all = userRepository.findAll();
         return all.stream()
@@ -31,7 +29,6 @@ public class UserManagementService implements UserService {
     }
 
     //Optional<T>
-    @Override
     public UserResponseDto getById(Long id) {
 
         Optional<UserAccount> byId1 = userRepository.findById(id);
@@ -40,7 +37,7 @@ public class UserManagementService implements UserService {
         return modelMapper.map(userAccount, UserResponseDto.class);
     }
 
-    @Override
+
     public void create(UserCreateRequestDto requestDto) {
         if(userRepository.existsByUsername(requestDto.getUsername())){
             throw new AlreadyExistException("Username already exists");
@@ -49,5 +46,6 @@ public class UserManagementService implements UserService {
 
         userRepository.save(map);
     }
+
 
 }

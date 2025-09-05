@@ -5,18 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressResponseDto {
+public class ContactResponseDto {
 
     private Long id;
+    private String phoneNumber;
 
-    private String city;
-    private String street;
-    private String apartment;
 
 }

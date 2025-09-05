@@ -1,10 +1,6 @@
 package com.example.oca42.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +25,9 @@ public class UserAccount {
 
     @OneToMany(mappedBy = "user")
     private List<Address> addresses; //open in view
+
+    @OneToOne(mappedBy = "user") //relation contact tablede saxlanir
+    private Contact contact;
 
     //OneToOne -> id ler her iki terefde saxlanila biler
     //OneToMany -> id many terefde saxlanilir

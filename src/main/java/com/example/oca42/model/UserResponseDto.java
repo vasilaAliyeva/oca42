@@ -1,5 +1,6 @@
 package com.example.oca42.model;
 
+import com.example.oca42.entity.Contact;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,5 @@ public class UserResponseDto {
     private String username;
     private Integer age;
     private List<AddressResponseDto> addresses;
+    private ContactResponseDto contact;
 }

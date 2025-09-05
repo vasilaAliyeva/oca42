@@ -2,7 +2,7 @@ package com.example.oca42.controller;
 
 import com.example.oca42.model.UserCreateRequestDto;
 import com.example.oca42.model.UserResponseDto;
-import com.example.oca42.service.UserService;
+import com.example.oca42.service.UserManagementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserManagementController {
 
-    private final UserService userManagementService;
+    private final UserManagementService userManagementService;
 
     //get all users
 
