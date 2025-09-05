@@ -23,10 +23,12 @@ public class UserAccount {
     private String password;
     private Integer age;
 
-    @OneToMany(mappedBy = "user")
+    //toMany olanlarda hamsi  default olaraq lazy olur
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Address> addresses; //open in view
 
-    @OneToOne(mappedBy = "user") //relation contact tablede saxlanir
+    //toOne relationlarda default olaraq eagerdi
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY) //relation contact tablede saxlanir
     private Contact contact;
 
     //OneToOne -> id ler her iki terefde saxlanila biler
