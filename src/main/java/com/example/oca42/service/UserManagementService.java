@@ -7,6 +7,7 @@ import com.example.oca42.model.ContactResponseDto;
 import com.example.oca42.model.UserCreateRequestDto;
 import com.example.oca42.model.UserResponseDto;
 import com.example.oca42.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.annotation.MergedAnnotation;
@@ -36,13 +37,21 @@ public class UserManagementService {
     //getbyid de virtual bir connection var database ile bu sessiondu,
     //hemin session bu method bitene qeder acig qalir ona goe bizz hansi userin infosunu getirdiyimizi
     //bilirik, open in view false ele bagla
+
+    //bu methodu 1 transaction kimi goturur ve birbasha acig saxliyir sessionu
+    //LAZY OLANDA TRANSACTION YAZMAQ HELL DEYIL - bosh yere session aciq saxlayir
+//    @Transactional
     public UserResponseDto getById(Long id) {
-    //n + 1 problem
-        Optional<UserAccount> byId1 = userRepository.getUserAccountById(id);
+        //n + 1 problem
+        Optional<UserAccount> byId1 = userRepository.findById(id);
+        //SELECT U.ID, U.NAME.. C.USER_ID FROM USER_ACCOUNT U WHERE U.ID = :ID --FINDBYID BUNU DUZELDIR FETCH TYPE EAGER
+        //JOIN CONTACT C ON C.USER_ID = U.ID
+        //WHERE U.ID =:ID
         UserAccount userAccount = byId1.orElseThrow(() -> new RuntimeException("User not found"));
 
 
         //eslinde bu 3 line auto olur basha dusmeye yaziriq
+
 //        System.out.println("user already gotten");
 //        ContactResponseDto contactResponseDto = new ContactResponseDto();
 //        System.out.println("getting user contact");
@@ -50,7 +59,7 @@ public class UserManagementService {
 //        contactResponseDto.setPhoneNumber(userAccount.getContact().getPhoneNumber());
 //
 //        System.out.println("getting user address");
-//        List<AddressResponseDto> addresses = userAccount.getAddresses().stream().map(a->{
+//        List<AddressResponseDto> addresses = userAccount.getAddresses().stream().map(a -> {
 //            AddressResponseDto addressResponseDto = new AddressResponseDto();
 //            addressResponseDto.setId(a.getId());
 //            addressResponseDto.setApartment(a.getApartment());

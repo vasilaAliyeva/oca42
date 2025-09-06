@@ -13,17 +13,17 @@ public interface UserRepository extends JpaRepository<UserAccount, Long> {
 
     UserAccount findOneById(Long id);
 
-    @EntityGraph(attributePaths = {"contact", "addresses", "roles" })
-Optional<UserAccount> getUserAccountById(long id);
+    @EntityGraph(attributePaths = {"contact", "addresses", "roles"})
+    Optional<UserAccount> getUserAccountById(long id);
 
     //BURDA OZUMUZ YAZA BILERIK QUERYNI
     @Query(value = """
-           select UserAccount
-        from UserAccount us1_0
-            left join us1_0.contact
-            left join us1_0.addresses
-        where us1_0.id = :id
-        """)
+               select UserAccount
+            from UserAccount us1_0
+                left join us1_0.contact
+                left join us1_0.addresses
+            where us1_0.id = :id
+            """)
     Optional<UserAccount> getUserAccountByIdQuery(@Param("id") Long id);
 
 

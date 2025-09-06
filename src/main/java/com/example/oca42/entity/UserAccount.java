@@ -30,16 +30,16 @@ public class UserAccount {
     private List<Address> addresses; //open in view
 
     //toOne relationlarda default olaraq eagerdi
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY) //relation contact tablede saxlanir
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER) //relation contact tablede saxlanir
     private Contact contact;
 
     //MANY TO MANY USERDE YAZIRIQ relationu
     //role tablelerde esasen eager qoyulur many to many olmasina baxmayaraq
-    @ManyToMany (fetch = FetchType.EAGER)
-    @JoinTable (
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name ="role_id", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles = new HashSet<>();
 
