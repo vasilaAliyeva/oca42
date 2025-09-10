@@ -5,14 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCreateRequestDto {
+public class UserUpdateRequestDto {
 
-    private String username;
+
     private Integer age;
-    private String password;
-    private ContactCreateRequestDto contact;
+    private Set<Long> roleIds;
 }

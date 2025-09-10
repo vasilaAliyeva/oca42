@@ -1,6 +1,16 @@
 package com.example.oca42.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,27 +35,26 @@ public class UserAccount {
     private String password;
     private Integer age;
 
-    //toMany olanlarda hamsi  default olaraq lazy olur
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Address> addresses; //open in view
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true) //LAZY
+    private List<Address> addresses;
 
-    //toOne relationlarda default olaraq eagerdi
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER) //relation contact tablede saxlanir
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setUser(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setUser(null);
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Contact contact;
 
-    //MANY TO MANY USERDE YAZIRIQ relationu
-    //role tablelerde esasen eager qoyulur many to many olmasina baxmayaraq
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
-
-    //OneToOne -> id ler her iki terefde saxlanila biler
-    //OneToMany -> id many terefde saxlanilir
-    //ManyToOne -> id many terefde saxlanilir
-    //ManyToMany -> id ler 3 cu table da saxlanilir
-
 }
