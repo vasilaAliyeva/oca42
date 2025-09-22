@@ -91,7 +91,7 @@ public class UserManagementService {
 
     public UserAccount getUserByUsername(String username) {
         return userRepository.getUserAccountByUsername(username).orElseThrow(
-                ()-> new NotFoundException(("User not found"))
+                () -> new NotFoundException("User not found")
         );
     }
 }

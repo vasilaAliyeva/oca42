@@ -1,15 +1,18 @@
 package com.example.oca42.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthResponse {
 
-    private String accessToken;
-    private String refreshToken;
-
+    public String accessToken; //1 min //401 id/username + roles[]
+    public String refreshToken; //1 day //401 id/username +expire time is more than access token
 }
